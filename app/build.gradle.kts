@@ -44,4 +44,7 @@ dependencies {
     implementation ("com.airbnb.android:lottie:4.2.0")
 
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation ("com.github.bumptech.glide:glide:4.12.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
+
 }

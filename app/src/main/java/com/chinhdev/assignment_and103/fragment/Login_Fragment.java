@@ -56,24 +56,26 @@ public class Login_Fragment extends Fragment {
             edt_pass.setText(password);
         }
         btn_login.setOnClickListener(v -> {
-            if (edt_email.getText().toString().equals("") || edt_pass.getText().toString().equals("")){
-                Toast.makeText(getContext(), "Không được bỏ trống", Toast.LENGTH_SHORT).show();
-                return;
-            }
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Home_Fragment()).commit();
+//            if (edt_email.getText().toString().equals("") || edt_pass.getText().toString().equals("")){
+//                Toast.makeText(getContext(), "Không được bỏ trống", Toast.LENGTH_SHORT).show();
+//                return;
+//            }
             String email = edt_email.getText().toString();
             String pass = edt_pass.getText().toString();
-            auth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        Toast.makeText(getContext(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Home_Fragment()).commit();
-                    } else {
-                        Toast.makeText(getContext(), "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
-                    }
-                    
-                }
-            });
+
+//            auth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+//                @Override
+//                public void onComplete(@NonNull Task<AuthResult> task) {
+//                    if (task.isSuccessful()) {
+//                        Toast.makeText(getContext(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+//                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Home_Fragment()).commit();
+//                    } else {
+//                        Toast.makeText(getContext(), "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
+//                    }
+//
+//                }
+//            });
 
         });
     }

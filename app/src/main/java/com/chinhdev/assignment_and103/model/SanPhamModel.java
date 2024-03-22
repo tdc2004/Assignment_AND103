@@ -1,57 +1,67 @@
 package com.chinhdev.assignment_and103.model;
 
 public class SanPhamModel {
-    private String id;
-    private String ten;
-    private double gia;
-    private int soLuong;
-    private boolean tonKho;
+    private String _id;
+    private String image,name;
+    private int quantity,price,inventory;
 
-    public SanPhamModel(String id, String ten, double gia, int soLuong, boolean tonKho) {
-        this.id = id;
-        this.ten = ten;
-        this.gia = gia;
-        this.soLuong = soLuong;
-        this.tonKho = tonKho;
+    public SanPhamModel() {
     }
 
-    public String getId() {
-        return id;
+    public SanPhamModel(String _id, String image, String name, int quantity, int price, int inventory) {
+        this._id = _id;
+        this.image = image;
+        this.name = name;
+        this.quantity = quantity;
+        this.price = price;
+        this.inventory = inventory;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String get_id() {
+        return _id;
     }
 
-    public String getTen() {
-        return ten;
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
-    public void setTen(String ten) {
-        this.ten = ten;
+    public String getImage() {
+        return image;
     }
 
-    public double getGia() {
-        return gia;
+    public void setImage(String image) {
+        this.image = image;
     }
 
-    public void setGia(double gia) {
-        this.gia = gia;
+    public String getName() {
+        return name;
     }
 
-    public int getSoLuong() {
-        return soLuong;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setSoLuong(int soLuong) {
-        this.soLuong = soLuong;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public boolean isTonKho() {
-        return tonKho;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
-    public void setTonKho(boolean tonKho) {
-        this.tonKho = tonKho;
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public int getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(int inventory) {
+        this.inventory = inventory;
     }
 }
