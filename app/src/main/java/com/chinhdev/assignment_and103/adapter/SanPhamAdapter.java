@@ -1,32 +1,25 @@
 package com.chinhdev.assignment_and103.adapter;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.sqlite.SQLiteConstraintException;
 import android.net.Uri;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.chinhdev.assignment_and103.APIServer;
-import com.chinhdev.assignment_and103.ItemClickListener;
+import com.chinhdev.assignment_and103.Interface.APIServer;
+import com.chinhdev.assignment_and103.Interface.ItemClickListener;
 import com.chinhdev.assignment_and103.R;
+import com.chinhdev.assignment_and103.activity.DetailsActivity;
 import com.chinhdev.assignment_and103.model.SanPhamModel;
 
 import java.util.ArrayList;
@@ -38,7 +31,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.ViewHolder> {
-    private String url = "http://192.168.0.105:3000/";
+    private String url = "http://10.0.2.2:3000/";
     APIServer apiService;
 
     Context context;
@@ -55,6 +48,10 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.ViewHold
         this.context = context;
         this.list = list;
     }
+    public void updateData(ArrayList<SanPhamModel> newDataList) {
+        this.list = newDataList;
+        notifyDataSetChanged();
+    }
 
     @NonNull
     @Override
@@ -70,6 +67,7 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.ViewHold
         holder.giaTextView.setText(sanPhamModel.getPrice() + "");
         holder.soLuongTextView.setText(sanPhamModel.getQuantity() + "");
         holder.tonKhoTextView.setText(sanPhamModel.getInventory() + "");
+        holder.moTaTV.setText(sanPhamModel.getDescription() + "");
         Glide.with(context)
                 .load(sanPhamModel.getImage())
                 .placeholder(R.drawable.image)
@@ -79,6 +77,14 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.ViewHold
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         apiService = retrofit.create(APIServer.class);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(new Intent(context, DetailsActivity.class));
+                intent.putExtra("id",sanPhamModel.get_id());
+                context.startActivity(intent);
+            }
+        });
         holder.btn_del.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,7 +132,7 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.ViewHold
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView, btn_del,btn_upda;
-        TextView tenTextView, giaTextView, soLuongTextView, tonKhoTextView;
+        TextView tenTextView, giaTextView, soLuongTextView, tonKhoTextView,moTaTV;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -135,8 +141,13 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.ViewHold
             giaTextView = itemView.findViewById(R.id.giaTextView);
             soLuongTextView = itemView.findViewById(R.id.soLuongTextView);
             tonKhoTextView = itemView.findViewById(R.id.tonKhoTextView);
+            moTaTV = itemView.findViewById(R.id.moTaTextView);
             btn_del = itemView.findViewById(R.id.btn_delete);
             btn_upda = itemView.findViewById(R.id.btn_update);
         }
+    }
+    public void filterList(ArrayList<SanPhamModel> filteredList) {
+        list = filteredList;
+        notifyDataSetChanged();
     }
 }

@@ -2,16 +2,17 @@ package com.chinhdev.assignment_and103.model;
 
 public class SanPhamModel {
     private String _id;
-    private String image,name;
-    private int quantity,price,inventory;
+    private String image, name, description;
+    private int quantity, price, inventory;
 
     public SanPhamModel() {
     }
 
-    public SanPhamModel(String _id, String image, String name, int quantity, int price, int inventory) {
+    public SanPhamModel(String _id, String image, String name, String description, int quantity, int price, int inventory) {
         this._id = _id;
         this.image = image;
         this.name = name;
+        this.description = description;
         this.quantity = quantity;
         this.price = price;
         this.inventory = inventory;
@@ -39,6 +40,14 @@ public class SanPhamModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getQuantity() {

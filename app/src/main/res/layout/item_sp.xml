@@ -55,6 +55,12 @@
                 android:layout_height="wrap_content"
                 android:text="Tồn kho"
                 android:textSize="16sp"/>
+            <TextView
+                android:id="@+id/moTaTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mô tả"
+                android:textSize="16sp"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"
