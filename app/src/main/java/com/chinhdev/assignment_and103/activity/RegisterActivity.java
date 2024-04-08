@@ -39,7 +39,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegisterActivity extends AppCompatActivity {
     ImageView imageView;
-    TextInputEditText edt_email, edt_user, edt_pass;
+    TextInputEditText edt_email, edt_user, edt_pass,ed_respass;
     Retrofit retrofit;
     APIServer apiServer;
     private String url = "http://10.0.2.2:3000/";
@@ -53,6 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
         imageView = findViewById(R.id.img_avatar);
         edt_email = findViewById(R.id.ed_email_regis);
         edt_pass = findViewById(R.id.ed_password_regis);
+        ed_respass = findViewById(R.id.ed_repassword_regis);
         edt_user = findViewById(R.id.ed_username_regis);
         btn_res = findViewById(R.id.bt_register);
         retrofit = new Retrofit.Builder()
@@ -61,7 +62,6 @@ public class RegisterActivity extends AppCompatActivity {
                 .build();
         apiServer = retrofit.create(APIServer.class);
 
-        // Lắng nghe sự kiện chọn ảnh
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,17 +75,24 @@ public class RegisterActivity extends AppCompatActivity {
                 String email = edt_email.getText().toString();
                 String username = edt_user.getText().toString();
                 String password = edt_pass.getText().toString();
+                String repass = ed_respass.getText().toString();
+                if (email.equals("")||username.equals("")||password.equals("")){
+                    Toast.makeText(RegisterActivity.this, "Vui long khong bo trong", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (!repass.equals(password)){
+                    Toast.makeText(RegisterActivity.this, "Mat khau khong trung", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 if (file != null) {
-                    // Tạo request body cho ảnh
                     RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
                     MultipartBody.Part imageFile = MultipartBody.Part.createFormData("avatar", file.getName(), requestBody);
 
-                    // Tạo request body cho các trường dữ liệu khác
                     RequestBody usernameRequestBody = RequestBody.create(MediaType.parse("text/plain"), username);
                     RequestBody emailRequestBody = RequestBody.create(MediaType.parse("text/plain"), email);
                     RequestBody passwordRequestBody = RequestBody.create(MediaType.parse("text/plain"), password);
 
-                    // Gửi yêu cầu đăng ký người dùng
                     Call<UserModel> call = apiServer.register(usernameRequestBody,passwordRequestBody,emailRequestBody,imageFile);
                     call.enqueue(new Callback<UserModel>() {
                         @Override
@@ -120,7 +127,6 @@ public class RegisterActivity extends AppCompatActivity {
         getImage.launch(intent);
     }
 
-    // Lắng nghe kết quả trả về từ việc chọn ảnh
     ActivityResultLauncher<Intent> getImage = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
@@ -137,7 +143,6 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             });
 
-    // Tạo File từ Uri của ảnh được chọn
     private File createFileFormUri (Uri path, String name) {
         File _file = new File(RegisterActivity.this.getCacheDir(), name + ".png");
         try {

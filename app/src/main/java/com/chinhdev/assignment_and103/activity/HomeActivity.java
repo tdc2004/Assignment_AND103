@@ -180,10 +180,35 @@ public class HomeActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     String name = edtName.getText().toString();
-                    int price = Integer.parseInt(edtPrice.getText().toString());
-                    int quantity = Integer.parseInt(edtQuantity.getText().toString());
-                    int inventory = Integer.parseInt(edtInventory.getText().toString());
+                    String gia = (edtPrice.getText().toString());
+                    String sl = (edtQuantity.getText().toString());
+                    String tk = (edtInventory.getText().toString());
                     String mota = edtMota.getText().toString();
+                    if (name.equals("")||gia.equals("")||sl.equals("")||tk.equals("")||mota.equals("")){
+                        Toast.makeText(HomeActivity.this, "Vui lòng không bỏ trống", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    int price;
+                    try {
+                        price = Integer.parseInt(gia);
+                    }catch (Exception e){
+                        Toast.makeText(HomeActivity.this, "Giá phải là số", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    int quantity;
+                    try {
+                        quantity = Integer.parseInt(sl);
+                    }catch (Exception e){
+                        Toast.makeText(HomeActivity.this, "số lượng phải là số", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    int inventory;
+                    try {
+                        inventory = Integer.parseInt(tk);
+                    }catch (Exception e){
+                        Toast.makeText(HomeActivity.this, "Tồn kho phải là số", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
 
                     SanPhamModel newSanPham = new SanPhamModel();
                     newSanPham.setName(name);

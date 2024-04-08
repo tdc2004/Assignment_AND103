@@ -63,11 +63,11 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         SanPhamModel sanPhamModel = list.get(position);
-        holder.tenTextView.setText(sanPhamModel.getName());
-        holder.giaTextView.setText(sanPhamModel.getPrice() + "");
-        holder.soLuongTextView.setText(sanPhamModel.getQuantity() + "");
-        holder.tonKhoTextView.setText(sanPhamModel.getInventory() + "");
-        holder.moTaTV.setText(sanPhamModel.getDescription() + "");
+        holder.tenTextView.setText("Tên SP: "+sanPhamModel.getName());
+        holder.giaTextView.setText("Giá: "+sanPhamModel.getPrice() + "");
+        holder.soLuongTextView.setText("Số lượng: "+sanPhamModel.getQuantity() + "");
+        holder.tonKhoTextView.setText("Tồn kho: "+sanPhamModel.getInventory() + "");
+        holder.moTaTV.setText("Mô tả: "+sanPhamModel.getDescription() + "");
         Glide.with(context)
                 .load(sanPhamModel.getImage())
                 .placeholder(R.drawable.image)

@@ -32,7 +32,7 @@ public class DetailsActivity extends AppCompatActivity {
     APIServer apiServer;
     private String url = "http://10.0.2.2:3000/";
 
-    ImageView imageView;
+    ImageView imageView,image_back;
     TextView textView_name, textView_price, textView_invention, tv_moTa;
     SanPhamModel sanPhamModel;
 
@@ -42,6 +42,13 @@ public class DetailsActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_details);
         imageView = findViewById(R.id.img_details);
+        image_back = findViewById(R.id.img_goBack);
+        image_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DetailsActivity.this, HomeActivity.class));
+            }
+        });
         textView_name = findViewById(R.id.tv_name_details);
         textView_price = findViewById(R.id.tv_price_details);
         textView_invention = findViewById(R.id.tv_spice_details);

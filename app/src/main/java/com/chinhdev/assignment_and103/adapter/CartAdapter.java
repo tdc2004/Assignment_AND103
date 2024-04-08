@@ -1,12 +1,15 @@
 package com.chinhdev.assignment_and103.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -52,6 +55,38 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         apiServer = retrofit.create(APIServer.class);
+        holder.image_del.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.create();
+                builder.setMessage("Bạn có chắc chắn muốn xóa không ?");
+                builder.setIcon(R.drawable.baseline_warning_24).setTitle("Cảnh báo");
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Call<Void> call = apiServer.deleteCart(cartModel.get_id());
+                        call.enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                if (response.isSuccessful()) {
+                                    list.remove(position);
+                                    notifyDataSetChanged();
+                                    Toast.makeText(context, "Xóa thành công", Toast.LENGTH_SHORT).show();
+                                } else {
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+
+                            }
+                        });
+
+                    }
+                }).setNegativeButton("Cancel", null).show();
+            }
+        });
 
         Call<SanPhamModel> call = apiServer.getSanPham(cartModel.getProduct_id());
         call.enqueue(new Callback<SanPhamModel>() {
@@ -82,7 +117,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView img_anh;
+        ImageView img_anh,image_del;
         TextView tv_name,tv_gia,tv_soLuong;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -90,6 +125,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             tv_name = itemView.findViewById(R.id.textViewProductName);
             tv_gia=itemView.findViewById(R.id.textViewProductPrice);
             tv_soLuong=itemView.findViewById(R.id.textViewProductQuantity);
+            image_del = itemView.findViewById(R.id.btn_del);
         }
     }
 }

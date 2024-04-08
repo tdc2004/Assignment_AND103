@@ -27,7 +27,6 @@
         app:layout_constraintTop_toBottomOf="@id/textViewCartTitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0"
         app:layout_constraintBottom_toTopOf="@+id/layoutCheckout"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
@@ -35,9 +34,9 @@
         android:id="@+id/layoutCheckout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_margin="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/menu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -55,5 +54,12 @@
             android:layout_marginTop="16dp"
             android:text="Checkout" />
     </LinearLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/menu"
+        app:menu="@menu/main_menu"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

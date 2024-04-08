@@ -46,6 +46,8 @@ public interface APIServer {
 
     @DELETE("list/{id}")
     Call<Void> deleteSanPham(@Path("id") String id);
+    @DELETE("listCart/{id}")
+    Call<Void> deleteCart(@Path("id") String id);
     @Multipart
     @POST("register")
     Call<UserModel> register(
